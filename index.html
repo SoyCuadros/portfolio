@@ -369,6 +369,23 @@
 
           <article class="timeline__item reveal reveal--delay" role="listitem">
             <div class="timeline__marker">
+              <span class="timeline__dot timeline__dot--accent"></span>
+            </div>
+            <div class="timeline__content timeline__content--highlight">
+              <time class="timeline__date" datetime="2025/2026">2025 — 2026</time>
+              <h3>Formador en Inteligencia Artificial</h3>
+              <p class="timeline__place">CIPFP Complejo Educativo de Cheste · CEFIRE</p>
+              <p>
+                Diseñador de contenido y ponente principal del curso oficial de 20 sesiones
+                <em>«Aplicaciones de IA en los Ciclos Formativos»</em> para el profesorado.
+                Ingeniería de prompts, automatización docente e integración práctica de LLMs
+                en entornos educativos.
+              </p>
+            </div>
+          </article>
+
+          <article class="timeline__item reveal reveal--delay" role="listitem">
+            <div class="timeline__marker">
               <span class="timeline__dot"></span>
             </div>
             <div class="timeline__content">
@@ -397,9 +414,13 @@
             </div>
             <div class="timeline__content">
               <time class="timeline__date" datetime="2022-09/2024-06">Sept. 2022 — Junio 2024</time>
-              <h3>Grado Medio en Informática</h3>
-              <p class="timeline__place">IES Serra Perenxisa, Torrent</p>
-              <p>Formación Profesional de Grado Medio en Informática.</p>
+              <h3>SMR — Sistemas Microinformáticos y Redes</h3>
+              <p class="timeline__place">IES Serra Perenxisa, Torrent, Valencia</p>
+              <p>
+                Formación Profesional de Grado Medio. Montaje y mantenimiento de equipos informáticos,
+                configuración de redes locales, administración de sistemas operativos (Windows/Linux),
+                ciberseguridad básica, virtualización y soporte técnico a usuarios y entornos corporativos.
+              </p>
             </div>
           </article>
 
@@ -455,7 +476,13 @@
             </div>
           </div>
 
-          <form class="contact-form reveal reveal--delay" id="contactForm" novalidate>
+          <form
+            id="contact-form"
+            class="contact-form reveal reveal--delay"
+            action="https://formspree.io/f/X_TU_ID_AQUÍ"
+            method="POST"
+            novalidate
+          >
             <div class="form-group">
               <label for="name">Nombre</label>
               <input type="text" id="name" name="name" required minlength="2" autocomplete="name" placeholder="Tu nombre">
@@ -476,11 +503,12 @@
               <textarea id="message" name="message" required minlength="10" rows="5" placeholder="Cuéntame sobre tu proyecto..."></textarea>
               <span class="form-error" id="messageError"></span>
             </div>
-            <button type="submit" class="btn btn--primary btn--full">
-              <span>Enviar mensaje</span>
+            <button type="submit" class="btn btn--primary btn--full" id="formSubmitBtn">
+              <span class="btn__label">Enviar mensaje</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
             </button>
-            <p class="form-success" id="formSuccess" hidden>¡Mensaje preparado! Se abrirá tu cliente de correo.</p>
+            <p class="form-success" id="formSuccess" role="status" hidden>¡Mensaje enviado con éxito, gracias por contactar!</p>
+            <p class="form-error-msg" id="formError" role="alert" hidden>No se pudo enviar el mensaje. Inténtalo de nuevo en unos minutos.</p>
           </form>
         </div>
       </div>

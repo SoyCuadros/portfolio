@@ -6,8 +6,6 @@
 (function () {
   'use strict';
 
-  const CONTACT_EMAIL = 'danielcuadros480@gmail.com';
-
   /* ── Typing Effect ── */
   const TITLES = [
     'Full-Stack Developer',
@@ -169,9 +167,12 @@
     card.addEventListener('focusout', () => card.classList.remove('is-hovering'));
   });
 
-  /* ── Contact Form Validation & Submit ── */
-  const contactForm = document.getElementById('contactForm');
+  /* ── Contact Form — Formspree AJAX ── */
+  const contactForm = document.getElementById('contact-form');
   const formSuccess = document.getElementById('formSuccess');
+  const formError = document.getElementById('formError');
+  const submitBtn = document.getElementById('formSubmitBtn');
+  const submitLabel = submitBtn?.querySelector('.btn__label');
 
   const validators = {
     name: {
@@ -229,18 +230,40 @@
 
   function hideFormMessages() {
     if (formSuccess) formSuccess.hidden = true;
+    if (formError) formError.hidden = true;
   }
 
-  function sendViaMailto(formData) {
-    const subject = encodeURIComponent(formData.get('subject'));
-    const body = encodeURIComponent(
-      `Nombre: ${formData.get('name')}\nEmail: ${formData.get('email')}\n\n${formData.get('message')}`
-    );
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+  function setFormLoading(isLoading) {
+    if (!submitBtn) return;
+    submitBtn.disabled = isLoading;
+    submitBtn.classList.toggle('btn--loading', isLoading);
+    if (submitLabel) {
+      submitLabel.textContent = isLoading ? 'Enviando...' : 'Enviar mensaje';
+    }
+  }
+
+  async function sendViaFormspree(formData) {
+    const endpoint = contactForm.action;
+
+    if (endpoint.includes('X_TU_ID_AQUÍ')) {
+      throw new Error('Configura tu ID de Formspree en el atributo action del formulario.');
+    }
+
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      body: formData,
+      headers: { Accept: 'application/json' }
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      throw new Error(data.error || 'Error al enviar el formulario.');
+    }
   }
 
   if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       hideFormMessages();
 
@@ -249,13 +272,21 @@
 
       if (!isValid) return;
 
-      sendViaMailto(new FormData(contactForm));
+      setFormLoading(true);
 
-      if (formSuccess) formSuccess.hidden = false;
-      contactForm.reset();
-      Object.values(validators).forEach((f) => { f.error.textContent = ''; });
+      try {
+        await sendViaFormspree(new FormData(contactForm));
 
-      setTimeout(hideFormMessages, 6000);
+        if (formSuccess) formSuccess.hidden = false;
+        contactForm.reset();
+        Object.values(validators).forEach((f) => { f.error.textContent = ''; });
+
+        setTimeout(hideFormMessages, 8000);
+      } catch {
+        if (formError) formError.hidden = false;
+      } finally {
+        setFormLoading(false);
+      }
     });
   }
 

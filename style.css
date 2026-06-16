@@ -1070,6 +1070,25 @@ main {
   transform: translateX(6px);
 }
 
+.timeline__dot--accent {
+  border-color: var(--accent-violet);
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
+}
+
+.timeline__content--highlight {
+  border-color: rgba(168, 85, 247, 0.25);
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.04), rgba(168, 85, 247, 0.06));
+}
+
+.timeline__content--highlight .timeline__date {
+  color: var(--accent-violet);
+}
+
+.timeline__content em {
+  font-style: normal;
+  color: var(--accent-cyan);
+}
+
 .timeline__date {
   display: inline-block;
   font-family: var(--font-mono);
