@@ -719,8 +719,18 @@ main {
 .bento-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  grid-template-areas:
+    "frontend frontend backend ai"
+    "frontend frontend idiomas ai"
+    "management management management management";
   gap: 1.25rem;
 }
+
+.bento-card[data-category="frontend"] { grid-area: frontend; }
+.bento-card[data-category="backend"] { grid-area: backend; }
+.bento-card[data-category="ai"] { grid-area: ai; }
+.bento-card[data-category="soft"] { grid-area: idiomas; }
+.bento-card[data-category="management"] { grid-area: management; }
 
 .bento-card {
   padding: 1.75rem;
@@ -738,18 +748,10 @@ main {
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
 }
 
-.bento-card--large {
-  grid-column: span 2;
-  grid-row: span 2;
-}
-
-.bento-card--wide {
-  grid-column: 1 / -1;
-}
-
 .bento-card--accent {
   background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(168, 85, 247, 0.08));
   border-color: rgba(168, 85, 247, 0.2);
+  align-self: stretch;
 }
 
 .bento-card--accent:hover {
@@ -778,6 +780,10 @@ main {
   font-size: 0.9rem;
   margin-top: 1rem;
   line-height: 1.65;
+}
+
+.bento-card[data-category="management"] .skill-tags {
+  margin-bottom: 0.25rem;
 }
 
 .skill-tags {
@@ -828,6 +834,7 @@ main {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
+  align-items: stretch;
 }
 
 .project-card {
@@ -835,6 +842,9 @@ main {
   border-radius: var(--radius-xl);
   cursor: pointer;
   outline: none;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .project-card__glow {
@@ -855,6 +865,7 @@ main {
 .project-card__inner {
   position: relative;
   z-index: 1;
+  flex: 1;
   height: 100%;
   padding: 2rem;
   border-radius: inherit;
@@ -1003,7 +1014,7 @@ main {
 .project-card:hover .project-card__detail,
 .project-card:focus-visible .project-card__detail {
   opacity: 1;
-  max-height: 200px;
+  max-height: 320px;
   padding-top: 1rem;
 }
 
@@ -1317,15 +1328,15 @@ main {
 
   .bento-grid {
     grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "frontend frontend"
+      "backend ai"
+      "idiomas idiomas"
+      "management management";
   }
 
   .bento-card--large {
-    grid-column: span 2;
-    grid-row: span 1;
-  }
-
-  .bento-card--wide {
-    grid-column: 1 / -1;
+    grid-row: auto;
   }
 
   .portfolio-grid {
@@ -1380,11 +1391,17 @@ main {
 
   .bento-grid {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "frontend"
+      "backend"
+      "ai"
+      "idiomas"
+      "management";
   }
 
   .bento-card--large,
   .bento-card--wide {
-    grid-column: span 1;
+    grid-column: auto;
   }
 
   .contact-grid {
